@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f7167ad2844254441b40b8a300b4f1fe
+timeCreated: 1432285214
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 46209
+  packageName: Tanks! Tutorial
+  packageVersion: 1.97
+  assetPath: Assets/Prefabs/DustTrail.prefab
+  uploadId: 518489

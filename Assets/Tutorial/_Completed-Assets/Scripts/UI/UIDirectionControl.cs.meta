@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: aeac210ca39225b458bb07429e573f2d
+timeCreated: 1430816721
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 46209
+  packageName: Tanks! Tutorial
+  packageVersion: 1.97
+  assetPath: Assets/_Completed-Assets/Scripts/UI/UIDirectionControl.cs
+  uploadId: 518489

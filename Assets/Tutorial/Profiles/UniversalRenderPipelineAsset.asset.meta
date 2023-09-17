@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: da2527f1ddd74124285bfeaf7a5f9feb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 46209
+  packageName: Tanks! Tutorial
+  packageVersion: 1.97
+  assetPath: Assets/Profiles/UniversalRenderPipelineAsset.asset
+  uploadId: 518489

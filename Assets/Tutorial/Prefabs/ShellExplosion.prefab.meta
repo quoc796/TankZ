@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 89e78efe92dfe5a42837b392cdb0bf9e
+timeCreated: 1432717265
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 46209
+  packageName: Tanks! Tutorial
+  packageVersion: 1.97
+  assetPath: Assets/Prefabs/ShellExplosion.prefab
+  uploadId: 518489

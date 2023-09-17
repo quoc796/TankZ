@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b83bf9933497ccf459675b37a3115920
+timeCreated: 1432285373
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 46209
+  packageName: Tanks! Tutorial
+  packageVersion: 1.97
+  assetPath: Assets/Animators/Pumpjack.controller
+  uploadId: 518489

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d0c31a39c426da94496d2abbf928d525
+timeCreated: 1431084896
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 46209
+  packageName: Tanks! Tutorial
+  packageVersion: 1.97
+  assetPath: Assets/Materials/BuildingWhite.mat
+  uploadId: 518489
