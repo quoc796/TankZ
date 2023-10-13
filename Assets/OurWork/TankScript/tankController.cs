@@ -8,17 +8,12 @@ public class tankController : MonoBehaviour
     public const float rSpd = 180f;
     public const float tSpd = 90f;
     public const float maxLaunchForce = 100f;
-
-
-    public const float coolDown = 0.5f;
     Rigidbody rb;
-    Timer shootCoolDown;
     Transform turret;
    
     //Controller
     protected Vector2 inputV;
     protected Vector2 inputT;
-    protected bool shoot;
     protected float launchRatio;
 
 
@@ -34,7 +29,6 @@ public class tankController : MonoBehaviour
 
     public virtual void Update()
     {
-        if (shootCoolDown != null) shootCoolDown.Update();
     }
     public virtual void FixedUpdate()
     {
@@ -46,17 +40,7 @@ public class tankController : MonoBehaviour
 
     public virtual void Shoot()
     {
-        if (shootCoolDown == null)
-        {
-            shootCoolDown = new Timer(coolDown, () => 
-            {
-                shootCoolDown = null;
-            });
-            Rigidbody r = Instantiate(shellPre, firePos.position, firePos.rotation);
-            Debug.Log(maxLaunchForce);
-            Debug.Log(firePos.forward * maxLaunchForce);
-            r.velocity = firePos.forward * maxLaunchForce * launchRatio;
-        }
+        
     }
     public void move()
     {
