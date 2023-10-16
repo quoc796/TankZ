@@ -24,7 +24,7 @@ public class PlayerController : tankController
 
     public void setShootPressed(bool b)
     {
-        shootPressed = b ;
+        shootPressed = b;
         pro.setOnLive(b);
     }
     public void startLaunch()
@@ -49,8 +49,43 @@ public class PlayerController : tankController
 
         inputV = input.Player.Movement.ReadValue<Vector2>();
         inputV = new Vector2(Mathf.CeilToInt(inputV.x), Mathf.CeilToInt(inputV.y));
-        inputT = input.Player.Turretmovement.ReadValue<Vector2>();
-        inputT = new Vector2(Mathf.CeilToInt(inputT.x), Mathf.CeilToInt(inputT.y));
+
         base.FixedUpdate();
+    }
+    Vector2 turnV;
+    public override void turnTurret()
+    {
+        if (inputV.x == 0)
+        {
+            Vector3 mousePosition = getMouseWorldPos();
+            // Calculate the direction from the object to the mouse position
+            Vector3 directionToMouse = (mousePosition - turret.position);
+
+            //make sure the forward position of mouse - turret is positive so that the turret only face forward
+            //directionToMouse.z = Mathf.Abs(directionToMouse.z);
+            directionToMouse = directionToMouse.normalized;
+            // Calculate the rotation needed to look at the mouse position
+            Quaternion targetRotation = Quaternion.LookRotation(directionToMouse, Vector3.up);
+            // Rotate the object towards the mouse position gradually
+            Quaternion current = turret.rotation;
+            turret.rotation = Quaternion.Slerp(current, targetRotation, tSpd * Time.fixedDeltaTime);
+        }
+    }
+
+
+
+
+
+    Vector3 getMouseWorldPos()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.point;
+        }
+
+        return Vector3.zero;
     }
 }

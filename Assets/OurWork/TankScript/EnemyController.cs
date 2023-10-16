@@ -6,9 +6,13 @@ using UnityEngine.AI;
 public class EnemyController : tankController
 {
     const float range = 5;
-    const float pathFindTimeInterval = 0.3f;
+    const float pathFindTimeInterval = 0.5f;
+    const float rGapMin = 30;
+    const float dGapMin = 1;
 
     public const float coolDown = 2f;
+    Vector3 nextWaypoint;
+
 
 
     Timer shootCoolDown;
@@ -17,9 +21,14 @@ public class EnemyController : tankController
     bool inRange;
     public override void Awake()
     {
+        rSpd = 90;
         base.Awake();
         agent = GetComponent<NavMeshAgent>();
-        InvokeRepeating("calculatePath", 0, pathFindTimeInterval);
+
+        //InvokeRepeating("calculatePath", 0, pathFindTimeInterval);
+
+
+
         target = GameObject.Find("Player").transform;
     }
     public override void Update()
@@ -74,34 +83,64 @@ public class EnemyController : tankController
         // Check if the calculated path is valid and contains at least one corner
         if (path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 1)
         {
-            Vector3 nextWaypoint = path.corners[1];
-
+            nextWaypoint = path.corners[1];
             Vector3 direction = (nextWaypoint - transform.position).normalized;
 
             float angle = Vector3.Angle(transform.forward, direction);
-            if (Mathf.Abs(angle) > 20)
+
+
+            //angle > min => rotate
+            if (Mathf.Abs(angle) > rGapMin)
             {
-                Debug.Log("wandering");
                 Vector3 crossProduct = Vector3.Cross(transform.forward, direction);
                 inputV.x = crossProduct.y > 0 ? 1 : -1;
                 inputV.y = 0;
-
-
             }
+            //move
             else
             {
-
-                Debug.Log("forward");
-                transform.rotation = Quaternion.LookRotation(direction);
+                //transform.rotation = Quaternion.LookRotation(direction);
                 inputV.y = 1;
                 inputV.x = 0;
+            }
+        }
+    }
+    public void WaitForNewPath()
+    {
+
+        if (inRange)
+        {
+            inputV = Vector2.zero;
+        }
+        //rotating
+        else if (inputV.x != 0)
+        {
+            Vector3 direction = (nextWaypoint - transform.position).normalized;
+            float angle = Vector3.Angle(transform.forward, direction);
+            Debug.Log(Mathf.Abs(angle));
+            if (Mathf.Abs(angle) < rGapMin)
+            {
+                Debug.Log("stop rotate");
+                inputV.x = 0;
+            }
+        }
+        //moving forward
+        else if(inputV.y != 0)
+        {
+            
+            if (Vector3.Distance(transform.position, nextWaypoint) < dGapMin)
+            {
+                Debug.Log("stop move");
+                inputV.y = 0;
             }
         }
     }
 
     public override void FixedUpdate()
     {
+        calculatePath();
         enmeyInput();
+        //WaitForNewPath();
         base.FixedUpdate();
         //if in range => shoot();
     }
