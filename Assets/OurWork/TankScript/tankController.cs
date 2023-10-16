@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class tankController : MonoBehaviour
 {
-    public const float mSpd = 100f;
-    public const float rSpd = 180f;
-    public const float tSpd = 90f;
-    public const float maxLaunchForce = 100f;
+    protected float mSpd = 300f;
+    protected float rSpd = 200f;
+
+    public const float tSpd = 5f;
+    public const float maxLaunchForce = 500f;
     Rigidbody rb;
-    Transform turret;
+    public Transform turret;
    
     //Controller
     protected Vector2 inputV;
-    protected Vector2 inputT;
+    protected Vector2 turretDirToMousePos;
     protected float launchRatio;
 
 
@@ -46,7 +47,11 @@ public class tankController : MonoBehaviour
     {
         if (inputV.y != 0)
         {
-            rb.velocity = transform.forward * mSpd * Time.fixedDeltaTime;
+            rb.velocity = transform.forward * mSpd * Time.fixedDeltaTime * inputV.y;
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
         }
     }
     public void turn()
@@ -54,27 +59,33 @@ public class tankController : MonoBehaviour
         Quaternion angle = Quaternion.Euler(0, inputV.x * Time.deltaTime * rSpd, 0);
         rb.MoveRotation(rb.rotation * angle);
     }
-    public void turnTurret()
+    //public void turnTurret()
+    //{
+    //    float rX = inputT.y * -1 * Time.deltaTime * tSpd + turret.eulerAngles.x;
+    //    float rY = inputT.x * Time.deltaTime * tSpd + turret.eulerAngles.y;
+    //    if (rX > 180)
+    //    {
+    //        rX = Mathf.Clamp(rX, 290, 361);
+    //    }
+    //    if (rX < 180)
+    //    {
+    //        rX = Mathf.Clamp(rX, -1, 20);
+    //    }
+
+    //    Quaternion xRotation = Quaternion.Euler(rX, 0, 0);
+    //    Quaternion yRotation = Quaternion.Euler(0, rY, 0);
+
+    //    // Combine rotations in the correct order (Y, X)
+    //    Quaternion newRotation = Quaternion.Euler(0,0,0) * yRotation * xRotation;
+
+
+    //    turret.rotation = newRotation;
+    //}
+
+
+    public virtual void turnTurret()
     {
-        float rX = inputT.y * -1 * Time.deltaTime * tSpd + turret.eulerAngles.x;
-        float rY = inputT.x * Time.deltaTime * tSpd + turret.eulerAngles.y;
-        if (rX > 180)
-        {
-            rX = Mathf.Clamp(rX, 290, 361);
-        }
-        if (rX < 180)
-        {
-            rX = Mathf.Clamp(rX, -1, 20);
-        }
 
-        Quaternion xRotation = Quaternion.Euler(rX, 0, 0);
-        Quaternion yRotation = Quaternion.Euler(0, rY, 0);
-
-        // Combine rotations in the correct order (Y, X)
-        Quaternion newRotation = Quaternion.Euler(0,0,0) * yRotation * xRotation;
-
-
-        turret.rotation = newRotation;
     }
 }
 
