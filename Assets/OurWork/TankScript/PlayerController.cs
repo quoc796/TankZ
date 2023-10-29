@@ -71,11 +71,6 @@ public class PlayerController : tankController
             turret.rotation = Quaternion.Slerp(current, targetRotation, tSpd * Time.fixedDeltaTime);
         }
     }
-
-
-
-
-
     Vector3 getMouseWorldPos()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
