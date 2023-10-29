@@ -5,7 +5,7 @@ using UnityEngine;
 public class tankController : MonoBehaviour
 {
     protected float mSpd = 300f;
-    protected float rSpd = 200f;
+    protected float rSpd = 150f;
 
     public const float tSpd = 5f;
     public const float maxLaunchForce = 500f;
@@ -56,31 +56,13 @@ public class tankController : MonoBehaviour
     }
     public void turn()
     {
-        Quaternion angle = Quaternion.Euler(0, inputV.x * Time.deltaTime * rSpd, 0);
-        rb.MoveRotation(rb.rotation * angle);
+        if (inputV.x != 0)
+        {
+            Quaternion angle = Quaternion.Euler(0, inputV.x * Time.deltaTime * rSpd, 0);
+            rb.MoveRotation(rb.rotation * angle);
+        }
+        else rb.angularVelocity = Vector3.zero;
     }
-    //public void turnTurret()
-    //{
-    //    float rX = inputT.y * -1 * Time.deltaTime * tSpd + turret.eulerAngles.x;
-    //    float rY = inputT.x * Time.deltaTime * tSpd + turret.eulerAngles.y;
-    //    if (rX > 180)
-    //    {
-    //        rX = Mathf.Clamp(rX, 290, 361);
-    //    }
-    //    if (rX < 180)
-    //    {
-    //        rX = Mathf.Clamp(rX, -1, 20);
-    //    }
-
-    //    Quaternion xRotation = Quaternion.Euler(rX, 0, 0);
-    //    Quaternion yRotation = Quaternion.Euler(0, rY, 0);
-
-    //    // Combine rotations in the correct order (Y, X)
-    //    Quaternion newRotation = Quaternion.Euler(0,0,0) * yRotation * xRotation;
-
-
-    //    turret.rotation = newRotation;
-    //}
 
 
     public virtual void turnTurret()
