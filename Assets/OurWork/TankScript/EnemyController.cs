@@ -7,17 +7,14 @@ public class EnemyController : tankController
 {
     const float range = 30;
     const float rGapMin = 30;
-    
     public const float coolDown = 4f;
-    Vector3 nextWaypoint;
-
-
-
     Timer shootCoolDown;
     NavMeshAgent agent;
     Transform target;
     bool inRange;
     bool isStop;
+    float castCoolDown;
+    float castCoolDownMax;
     public override void Awake()
     {
         rSpd = 90;
@@ -25,7 +22,8 @@ public class EnemyController : tankController
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player").transform;
         isStop = false;
-        
+        castCoolDownMax = Random.Range(10, 50);
+        castCoolDown = castCoolDownMax;
     }
     public override void Update()
     {
@@ -108,26 +106,35 @@ public class EnemyController : tankController
         if (angleToTarget <= rGapMin)
         {
             inAtkRange();
-            if (inRange)
+            if (inRange && castCoolDown < 0)
             {
-                Shoot();
-                Ray ray = new Ray(transform.position, target.position - transform.position);
+                castCoolDown = castCoolDownMax;
+                Vector3 boxCenter = transform.position;
+                Vector3 boxHalfSize = new Vector3(5, 5, 5); // half size of the box
+                Vector3 boxDirection = (target.position - transform.position).normalized;
 
-                //declare a RaycastHit variable to store information about the hit.
+                // Declare a RaycastHit variable to store information about the hit
                 RaycastHit hit;
 
-                //Perform the raycast. If it hits something, the 'hit' variable will contain information about the hit.
-                if (Physics.Raycast(ray, out hit))
+                // Perform the BoxCast. If it hits something, the 'hit' variable will contain information about the hit.
+                if (Physics.BoxCast(boxCenter, boxHalfSize, boxDirection, out hit, Quaternion.identity))
                 {
                     if (hit.collider != null)
                     {
                         if (hit.collider.tag == "PLAYER")
                         {
+                            Shoot();
                             isStop = true;
                         }
                         else isStop = false;
                     }
                 }
+
+
+
+
+
+
             }
             else
             {
@@ -138,6 +145,7 @@ public class EnemyController : tankController
     public override void FixedUpdate()
     {
         turnTurret();
+        castCoolDown -= 1;
         if (isStop)
         {
             agent.SetDestination(transform.position);

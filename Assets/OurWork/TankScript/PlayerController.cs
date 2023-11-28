@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,15 @@ public class PlayerController : tankController
     public PlayerInput input;
     public bool shootPressed;
     public projection pro;
+
+
+    [Header("SKILL UI")]
+    public GameObject coolDownPan;
+    public TextMeshProUGUI cTxt;
+    
+
+
+
     public override void Awake()
     {
         base.Awake();
@@ -17,6 +27,7 @@ public class PlayerController : tankController
         input.Enable();
         input.Player.Shoot.performed += ctx => startLaunch();
         input.Player.Shoot.canceled += ctx => Shoot();
+        input.Player.Skill.performed += ctx => skillPressed();
         launchRatio = 0;
         setShootPressed(false);
         pro.setup(maxLaunchForce);
@@ -52,7 +63,6 @@ public class PlayerController : tankController
 
         base.FixedUpdate();
     }
-    Vector2 turnV;
     public override void turnTurret()
     {
         if (inputV.x == 0)
@@ -83,4 +93,47 @@ public class PlayerController : tankController
 
         return Vector3.zero;
     }
+
+    public void skillPressed()
+    {
+        StartCoroutine(startSkillUse());
+    }
+
+
+
+
+    public IEnumerator startSkillUse()
+    {
+        anim.Play("upgrade");
+        coolDownPan.gameObject.SetActive(true);
+        status.dmgImmune = true;
+        float maxTimer = 30;
+        float duration = 5;
+        float currentTimer = maxTimer;
+        while (currentTimer > 0)
+        {
+            if (maxTimer - currentTimer > duration)
+            {
+                anim.Play("none");
+                status.dmgImmune = false;
+            }
+            currentTimer -= 1;
+            cTxt.text = currentTimer.ToString();
+            float ratio = currentTimer / maxTimer;
+            coolDownPan.transform.localScale = new Vector3(1, ratio, 1);
+            yield return new WaitForSeconds(1);
+        }
+        coolDownPan.gameObject.SetActive(false);
+    }
+}
+public class tankStatus
+{
+    public bool dmgImmune { get; set; }
+    public tankStatus()
+    {
+        dmgImmune = false;
+    }
+
+
+
 }

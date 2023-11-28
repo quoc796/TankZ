@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "3bef4974-61be-44fc-8526-c6f3dfd1ffd0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Turretmovement",
                     "type": "Value",
                     "id": "195afd3c-72bb-4f05-aaa5-b342c7269578",
@@ -154,6 +163,17 @@
                     "action": "Turretmovement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "93416998-c2a4-4e9e-a600-d7afdcd1754c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

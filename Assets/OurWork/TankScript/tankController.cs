@@ -21,11 +21,15 @@ public class tankController : MonoBehaviour
     //Shooting
     public Transform firePos;
     public Rigidbody shellPre;
-
+    public Animator anim;
+    public tankStatus status;
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
         turret = transform.GetChild(0).GetChild(3);
+        anim = GetComponent<Animator>();
+        status = new tankStatus();
+
     }
 
     public virtual void Update()

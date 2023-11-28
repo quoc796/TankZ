@@ -46,6 +46,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Skill"",
+                    ""type"": ""Button"",
+                    ""id"": ""3bef4974-61be-44fc-8526-c6f3dfd1ffd0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Turretmovement"",
                     ""type"": ""Value"",
                     ""id"": ""195afd3c-72bb-4f05-aaa5-b342c7269578"",
@@ -176,6 +185,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Turretmovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93416998-c2a4-4e9e-a600-d7afdcd1754c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +206,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
         m_Player_Turretmovement = m_Player.FindAction("Turretmovement", throwIfNotFound: true);
     }
 
@@ -250,6 +271,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_Skill;
     private readonly InputAction m_Player_Turretmovement;
     public struct PlayerActions
     {
@@ -257,6 +279,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @Skill => m_Wrapper.m_Player_Skill;
         public InputAction @Turretmovement => m_Wrapper.m_Player_Turretmovement;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -273,6 +296,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @Skill.started += instance.OnSkill;
+            @Skill.performed += instance.OnSkill;
+            @Skill.canceled += instance.OnSkill;
             @Turretmovement.started += instance.OnTurretmovement;
             @Turretmovement.performed += instance.OnTurretmovement;
             @Turretmovement.canceled += instance.OnTurretmovement;
@@ -286,6 +312,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @Skill.started -= instance.OnSkill;
+            @Skill.performed -= instance.OnSkill;
+            @Skill.canceled -= instance.OnSkill;
             @Turretmovement.started -= instance.OnTurretmovement;
             @Turretmovement.performed -= instance.OnTurretmovement;
             @Turretmovement.canceled -= instance.OnTurretmovement;
@@ -310,6 +339,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnSkill(InputAction.CallbackContext context);
         void OnTurretmovement(InputAction.CallbackContext context);
     }
 }
