@@ -25,13 +25,50 @@ public class PlayerController : tankController
         base.Awake();
         input = new PlayerInput();
         input.Enable();
-        input.Player.Shoot.performed += ctx => startLaunch();
-        input.Player.Shoot.canceled += ctx => Shoot();
-        input.Player.Skill.performed += ctx => skillPressed();
+        input.Player.Shoot.performed += startLaunchWrap;
+        input.Player.Shoot.canceled += shootWrap;
+        input.Player.Skill.performed += skillPressedWrap;
         launchRatio = 0;
         setShootPressed(false);
         pro.setup(maxLaunchForce);
     }
+    #region Wrap
+    public void startLaunchWrap(InputAction.CallbackContext ctx)
+    {
+        startLaunch();
+    }
+    public void shootWrap(InputAction.CallbackContext ctx)
+    {
+        Shoot();
+    }
+    public void skillPressedWrap(InputAction.CallbackContext ctx)
+    {
+        skillPressed();
+    }
+    #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void OnDestroy()
+    {
+        input.Player.Shoot.performed -= startLaunchWrap;
+        input.Player.Shoot.canceled -= shootWrap;
+        input.Player.Skill.performed -= skillPressedWrap;
+    }
+
+
 
     public void setShootPressed(bool b)
     {

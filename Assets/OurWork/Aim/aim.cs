@@ -9,7 +9,6 @@ public class aim : MonoBehaviour
     private void Awake()
     {
         changeCursor(cursor);
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     
@@ -17,5 +16,19 @@ public class aim : MonoBehaviour
     {
         Vector2 hotspot = new Vector2(aimSprite.width / 2, aimSprite.height / 2);
         Cursor.SetCursor(aimSprite, hotspot, CursorMode.Auto);
+    }
+    void Update()
+    {
+        // Check for user input to toggle cursor lock state
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleCursorLockState();
+        }
+    }
+
+    void ToggleCursorLockState()
+    {
+        Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = Cursor.lockState != CursorLockMode.Locked;
     }
 }

@@ -39,8 +39,6 @@ public class GameOverController : MonoBehaviour
 
     IEnumerator GameOverCoroutine()
     {
-        Debug.Log("Game Over!");
-
         // Set the gameOver TextMeshProUGUI object active
         gameOver.gameObject.SetActive(true);
 
