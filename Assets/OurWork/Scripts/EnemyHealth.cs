@@ -1,12 +1,20 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EnemyTankController : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
     private TankHealth enemyTankHealth;
+    private int level;
+
+    public TextMeshProUGUI levelText;
 
     private void Awake()
     {
+        // Initialize the level from PlayerPrefs
+        level = PlayerPrefs.GetInt("CurrentLevel", 2);
+
         // Find the enemy tank GameObject using a tag
         GameObject enemyTankObject = GameObject.FindGameObjectWithTag("ENEMY");
 
@@ -36,16 +44,38 @@ public class EnemyTankController : MonoBehaviour
             if (enemyTankHealth.m_CurrentHealth <= 0)
             {
                 Debug.Log("Enemy tank health is zero. Moving to the next level!");
-               // MoveToNextLevel();
+                StartCoroutine(ShowMessageAndRestart());
             }
         }
     }
 
-    void MoveToNextLevel()
+    IEnumerator ShowMessageAndRestart()
     {
-        // Add your logic to move to the next level here
-        // For example, load the next scene in the build settings
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex + 1);
+        Debug.Log("Showing message for 5 seconds...");
+
+        levelText.text = "Level " + level;
+
+        yield return new WaitForSeconds(3.5f);
+
+        level++;
+
+        // Save the updated level to PlayerPrefs
+        PlayerPrefs.SetInt("CurrentLevel", level);
+        PlayerPrefs.Save();
+
+        MoveToNextLevel(level);
+    }
+
+    void MoveToNextLevel(int lev)
+    {
+        Debug.Log("Moving to the next level");
+        SceneManager.LoadScene("Main");
+    }
+
+    public static void ResetLevelCount()
+    {
+        // Reset the level count to 1
+        PlayerPrefs.SetInt("CurrentLevel", 2);
+        PlayerPrefs.Save();
     }
 }
