@@ -43,7 +43,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if (enemyTankHealth.m_CurrentHealth <= 0)
             {
-                Debug.Log("Enemy tank health is zero. Moving to the next level!");
+             //   Debug.Log("Enemy tank health is zero. Moving to the next level!");
                 StartCoroutine(ShowMessageAndRestart());
             }
         }
@@ -51,7 +51,7 @@ public class EnemyHealth : MonoBehaviour
 
     IEnumerator ShowMessageAndRestart()
     {
-        Debug.Log("Showing message for 5 seconds...");
+        //Debug.Log("Showing message for 5 seconds...");
 
         levelText.text = "Level " + level;
 
