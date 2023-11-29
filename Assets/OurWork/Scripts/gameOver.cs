@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
-    public GameObject playerObject;
-    public TankHealth playerTankHealth;
+    private GameObject playerObject;
+    private TankHealth playerTankHealth;
 
     private void Awake()
     {
