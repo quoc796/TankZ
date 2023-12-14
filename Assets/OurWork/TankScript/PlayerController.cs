@@ -104,7 +104,7 @@ public class PlayerController : tankController
     {
         if (inputV.x == 0)
         {
-            Vector3 mousePosition = getMouseWorldPos();
+            Vector3 mousePosition = getMouseWorldPos() + transform.forward * 10;
             // Calculate the direction from the object to the mouse position
             Vector3 directionToMouse = (mousePosition - turret.position);
 

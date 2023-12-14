@@ -15,13 +15,14 @@ public class TankHealth : MonoBehaviour
     private ParticleSystem m_ExplosionParticles;   
     public float m_CurrentHealth;  
     private bool m_Dead;
-
+    private bool m_isPlayer;
     public tankController controller;
     private void Awake()
     {
         m_ExplosionParticles = Instantiate(m_ExplosionPrefab).GetComponent<ParticleSystem>();
         m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource>();
         controller = GetComponent<tankController>();
+        m_isPlayer = controller is PlayerController;
         m_ExplosionParticles.gameObject.SetActive(false);
     }
 
@@ -62,5 +63,8 @@ public class TankHealth : MonoBehaviour
         m_ExplosionParticles.Play();
         m_ExplosionAudio.Play();
         gameObject.SetActive(false);
+        if (m_isPlayer)
+            gameOver.i.setGameOver();
+        else gameOver.i.enemyKilled();
     }
 }
